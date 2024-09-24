@@ -1,0 +1,72 @@
+x-env_postgres: &env_postgres
+  POSTGRES_USER: '${DB_USER}'
+  POSTGRES_PASSWORD: '${DB_PASSWORD}'
+  POSTGRES_DB: '${DB_DATABASE}'
+  DATABASE_URL: '${DATABASE_URL}'
+  DATABASE_URL_TEST: '${DATABASE_URL_TEST}'
+
+x-env_timezone: &env_timezone
+  TZ: "Europe/Berlin"
+
+services:
+  ms-app:
+    image: python:3.12-slim
+    container_name: ms-app
+    restart: unless-stopped
+    environment:
+      <<: [*env_postgres, *env_timezone]
+    command: >
+      sh -c "pip install -e .[dev,test] &&
+             /app/docker_entrypoint.sh debug"
+    working_dir: /app
+    depends_on:
+      ms-db:
+        condition: service_healthy
+      ms-caddy:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+      - ./migration:/app/migration
+      - ./templates:/app/templates
+      - ./alembic:/app/alembic
+      - ./alembic.ini:/app/alembic.ini
+      - ./scripts/docker_entrypoint.sh:/app/docker_entrypoint.sh
+    ports:
+      - '${FRONTEND_PORT}:8255'
+      - '${DEBUG_PORT}:5678'
+
+
+  ms-db:
+    image: postgres:16.4
+    container_name: ms-db
+    restart: unless-stopped
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      <<: [*env_postgres, *env_timezone]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    ports:
+      - '5432:5432'
+
+  ms-caddy:
+    image: caddy:2.8.4
+    container_name: ms-caddy
+    restart: unless-stopped
+    environment:
+      <<: [*env_timezone]
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./caddy/Caddyfile.txt:/etc/caddy/Caddyfile
+      - ./caddy/site:/srv
+      - ./caddy/caddy_data:/data
+      - ./caddy/caddy_config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"

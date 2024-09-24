@@ -1,0 +1,10 @@
+{
+        http_port   80
+        https_port  443
+}
+
+mass-spec-app.localhost {
+
+        reverse_proxy ms-app:8255
+        tls internal
+}
