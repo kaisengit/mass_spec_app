@@ -5,7 +5,7 @@
 
 
 The main app is found 1_docker_app. It is using postgresql as a database, caddy as a reverse proxy/load balancer and Python/SQLAlchemy/FastAPI as a backend.
-![App Overview](https://github.com/kaisengit/mass_spec_app/blob/master/images/app_overview.png?raw=true)
+![App Overview](images/app_overview.png?raw=true)
 ## Installation
 First get Docker for your operating system: https://www.docker.com/
 
@@ -43,4 +43,4 @@ All API functions, including their description and expected types, are available
 Note that at the moment the database does not use a persistent volume; restarting via docker compose means also restarting with a clean database.
 
 ## Database Model
-![App Overview](https://github.com/kaisengit/mass_spec_app/blob/master/images/db_model.png?raw=true)
+![App Overview](images/db_model.png?raw=true)
