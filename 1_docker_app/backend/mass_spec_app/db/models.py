@@ -7,7 +7,6 @@ include relationships between tables.
 """  # noqa: E501
 from typing import List, Optional
 
-from mass_spec_app.db.session import Base
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
@@ -20,6 +19,8 @@ from sqlalchemy import (
     UniqueConstraint,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from mass_spec_app.db.session import Base
 
 
 # check if the inital migration was done

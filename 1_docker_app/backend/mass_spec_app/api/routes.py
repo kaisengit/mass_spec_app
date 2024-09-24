@@ -4,17 +4,17 @@ Defines the API routes for all API requests to the appropriate endpoints for dat
 """  # noqa: E501
 from typing import Dict, List
 
-import mass_spec_app.scripts.chem_utils as cu
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from mass_spec_app.api import schemas
-from mass_spec_app.db import crud, models
-from mass_spec_app.db.session import get_db
 from sqlalchemy.orm import Session
 from starlette.requests import Request
 
+import mass_spec_app.scripts.chem_utils as cu
 from mass_spec_app import config
+from mass_spec_app.api import schemas
+from mass_spec_app.db import crud, models
+from mass_spec_app.db.session import get_db
 
 # Create an APIRouter instance
 router = APIRouter()

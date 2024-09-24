@@ -33,6 +33,7 @@ setup(
             "debugpy==1.8.5",
             "black==24.8.0",
             "flake8==7.1.1",
+            "Flake8-pyproject==1.2.3",
             "isort==5.13.2",
             "pre-commit==3.8.0",
             "types-passlib==1.7.7.20240819",

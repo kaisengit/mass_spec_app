@@ -11,12 +11,13 @@ Simpy start the application with
     docker compose up -d --build
 
 There is also a docker-compose.dev.yml file allowing for attaching a debugger. A debug configuration for vscode is included in .vscode.
-The debug configuration does NOT build the image defined in the Dockerfile but rather passes through all backend files via a volumen. Therfore code changes are directly effective (or after restarting the app).
+The debug configuration does NOT build the image defined in the Dockerfile but rather passes through all backend files via a volumee. Therefore, code changes are directly effective (or after restarting the app).
 
-Note that the project uses pre-commit hooks to maintain properly formatted code. Therefore the package pre-commit
+Note that the project uses pre-commit hooks to maintain properly formatted code. Therefore the package pre-commit is required for committing.
+Unit tests via pytest should be run from within the docker container (working database connection required).
 
 ## Usage
-The web frontend will be served on mass-spec-app.localhost.
+The web frontend will be served by caddy on mass-spec-app.localhost.
 The address may be configured in the Caddyfile.txt
 
 Note that at the moment the database does not use a persistent volume; restarting via docker compose means also restarting with a clean database.

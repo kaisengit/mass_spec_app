@@ -1,5 +1,6 @@
-from mass_spec_app.db.session import get_db
 from sqlalchemy.orm import Session
+
+from mass_spec_app.db.session import get_db
 
 
 def test_get_db():

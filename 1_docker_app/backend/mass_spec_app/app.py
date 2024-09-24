@@ -6,6 +6,7 @@ Handles the startup, shutdown, and routing of requests to the appropriate endpoi
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+
 from mass_spec_app.api.routes import router
 from mass_spec_app.db.session import SessionLocal
 from mass_spec_app.scripts.populate_data import populate_data

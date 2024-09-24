@@ -1,13 +1,13 @@
 import pytest
 from fastapi.testclient import TestClient
-from mass_spec_app.app import app
-from mass_spec_app.db.models import Base
-from mass_spec_app.db.session import get_db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists, drop_database
 
 from mass_spec_app import config
+from mass_spec_app.app import app
+from mass_spec_app.db.models import Base
+from mass_spec_app.db.session import get_db
 
 # Setup test database connection
 engine = create_engine(config.DATABASE_URL_TEST)

@@ -1,4 +1,8 @@
 import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy_utils import create_database, database_exists, drop_database
+
 from mass_spec_app.api import schemas
 from mass_spec_app.config import DATABASE_URL_TEST
 from mass_spec_app.db.crud import (
@@ -6,9 +10,6 @@ from mass_spec_app.db.crud import (
     get_measured_compounds_filtered,
 )
 from mass_spec_app.db.models import Base
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy_utils import create_database, database_exists, drop_database
 
 engine = create_engine(DATABASE_URL_TEST)
 if not database_exists(engine.url):
