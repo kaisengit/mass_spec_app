@@ -4,7 +4,7 @@
 0_initial_explore_data just contains a Jupyter notebook for having a first look at the data.
 
 
-The main app is found 1_docker_app. It is using postgresql as a database, caddy as a reverse proxy/load balancer and Python/SQLAlchemy/FastAPI as a backend.
+The main app is found in the 1_docker_app/ folder. It is using postgresql as a database, caddy as a reverse proxy/load balancer and Python/SQLAlchemy/FastAPI as a backend.
 ![App Overview](images/app_overview.png?raw=true)
 ## Installation
 First get Docker for your operating system: https://www.docker.com/
@@ -23,9 +23,9 @@ You can remove all containers with
 in the same folder.
 
 There is also a docker-compose.dev.yml file allowing for attaching a debugger. A debug configuration for vscode is included in .vscode.
-The debug configuration does NOT build the image defined in the Dockerfile but rather passes through all backend files via a volumee. Therefore, code changes are directly effective (or after restarting the app). Bring it up with:
+The debug configuration does NOT build the image defined in the Dockerfile but rather passes through all backend files via a volume. Therefore, code changes are directly effective (or after restarting the app). Bring it up with:
 
-    docker compose up -f docker-compose.dev.yml -d --build
+    docker compose up -f docker-compose.dev.yml -d
 
 Note that the project uses pre-commit hooks to maintain properly formatted code. Therefore the package pre-commit is required for committing.
 Unit tests via pytest should be run from within the docker container (working database connection required).
@@ -40,7 +40,7 @@ The address may be configured in the Caddyfile.txt
 Click on the link to go to the Swagger UI. This provides a comfortable web frontend for the api.
 All API functions, including their description and expected types, are available here.
 
-Note that at the moment the database does not use a persistent volume; restarting via docker compose means also restarting with a clean database.
+Note that at the moment the database does not use a persistent volume; restarting via docker compose also means restarting with a clean database.
 
 ## Database Model
 ![App Overview](images/db_model.png?raw=true)
