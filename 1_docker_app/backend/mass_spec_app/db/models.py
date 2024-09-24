@@ -4,12 +4,21 @@ Defines SQLAlchemy models that map to database tables, including the
 Compound, MeasuredCompound, RetentionTime, and Adduct models.
 These models represent the structure of the application's database and
 include relationships between tables.
-"""
+"""  # noqa: E501
 from typing import List, Optional
 
 from mass_spec_app.db.session import Base
-from sqlalchemy import (Boolean, CheckConstraint, Column, DateTime, Float,
-                        ForeignKey, Integer, String, UniqueConstraint)
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -21,20 +30,26 @@ class InitializationStatus(Base):
     is_initialized = Column(
         Boolean, default=False
     )  # Flag to check if DB is initialized
-    initialized_at = Column(DateTime, default=None)  # Timestamp when it was initialized
+    initialized_at = Column(
+        DateTime, default=None
+    )  # Timestamp when it was initialized
 
 
 class Compound(Base):
     __tablename__ = "compounds"
 
-    compound_id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    compound_id: Mapped[int] = mapped_column(
+        Integer, primary_key=True, index=True
+    )
     compound_name: Mapped[str] = mapped_column(String, index=True)
     molecular_formula: Mapped[str] = mapped_column(String)
     type: Mapped[str] = mapped_column(String)
-    type: Mapped[str] = Column(String, nullable=True)  # Allow NULL values in 'type'
+    type: Mapped[str] = Column(
+        String, nullable=True
+    )  # Allow NULL values in 'type'
     computed_mass: Mapped[float] = mapped_column(Float)
 
-    # One-to-Many relationship with MeasuredCompound (Optional for reverse relationship)
+    # One-to-Many relationship with MeasuredCompound (Optional for reverse relationship)  # noqa: E501
     measured_compounds: Mapped[List["MeasuredCompound"]] = relationship(
         "MeasuredCompound", back_populates="compound"
     )
@@ -43,7 +58,9 @@ class Compound(Base):
 class Adduct(Base):
     __tablename__ = "adducts"
 
-    adduct_id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    adduct_id: Mapped[int] = mapped_column(
+        Integer, primary_key=True, index=True
+    )
     adduct_name: Mapped[str] = mapped_column(String)
     mass_adjustment: Mapped[float] = mapped_column(Float)
     ion_mode: Mapped[str] = mapped_column(String)
@@ -69,7 +86,9 @@ class RetentionTime(Base):
     )
     # check that retention_time is positive
     __table_args__ = (
-        CheckConstraint("retention_time > 0", name="ck_retention_time_positive"),
+        CheckConstraint(
+            "retention_time > 0", name="ck_retention_time_positive"
+        ),
     )
 
 
@@ -82,7 +101,9 @@ class MeasuredCompound(Base):
     compound_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("compounds.compound_id")
     )
-    adduct_id: Mapped[int] = mapped_column(Integer, ForeignKey("adducts.adduct_id"))
+    adduct_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("adducts.adduct_id")
+    )
     retention_time_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("retention_times.retention_time_id")
     )

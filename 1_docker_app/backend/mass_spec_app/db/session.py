@@ -2,7 +2,7 @@
 """
 Sets up the database connection using SQLAlchemy's engine and session maker.
 Handles the lifecycle of database sessions for executing transactions within the API.
-"""
+"""  # noqa: E501
 from typing import Generator
 
 from mass_spec_app.config import DATABASE_URL

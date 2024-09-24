@@ -14,7 +14,9 @@ engine = create_engine(config.DATABASE_URL_TEST)
 if not database_exists(engine.url):
     print("create test db")
     create_database(engine.url)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine
+)
 
 
 # Dependency override

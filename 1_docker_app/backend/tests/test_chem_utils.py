@@ -1,7 +1,9 @@
 import pytest
-from mass_spec_app.scripts.chem_utils import (convert_isotope_notation,
-                                              get_measured_formula,
-                                              get_monoisotopic_mass)
+from mass_spec_app.scripts.chem_utils import (
+    convert_isotope_notation,
+    get_measured_formula,
+    get_monoisotopic_mass,
+)
 
 
 def test_convert_isotope_notation():

@@ -77,7 +77,9 @@ class MeasuredCompoundCreate(MeasuredCompoundBase):
 
 class MeasuredCompound(MeasuredCompoundBase):
     measured_compound_id: int
-    measured_mass: float  # Measured mass will be calculated based on the adduct
+    measured_mass: (
+        float  # Measured mass will be calculated based on the adduct
+    )
     molecular_formula: str  # formula is computed based on adduct
     retention_time_id: int  # is looked up
     adduct_id: int  # will be found by DB lookup

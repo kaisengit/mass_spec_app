@@ -13,11 +13,13 @@ from mass_spec_app.scripts.populate_data import populate_data
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Manually create the database session as lifespan does not work with Depends
+    # Manually create the database session as lifespan does not work with Depends # noqa: E501
     db = SessionLocal()
     try:
         # Run the data population logic
-        populate_data(db)  # Pass the session manually to the populate_data function
+        populate_data(
+            db
+        )  # Pass the session manually to the populate_data function
         yield
     finally:
         # Close the database session

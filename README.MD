@@ -13,6 +13,8 @@ Simpy start the application with
 There is also a docker-compose.dev.yml file allowing for attaching a debugger. A debug configuration for vscode is included in .vscode.
 The debug configuration does NOT build the image defined in the Dockerfile but rather passes through all backend files via a volumen. Therfore code changes are directly effective (or after restarting the app).
 
+Note that the project uses pre-commit hooks to maintain properly formatted code. Therefore the package pre-commit
+
 ## Usage
 The web frontend will be served on mass-spec-app.localhost.
 The address may be configured in the Caddyfile.txt

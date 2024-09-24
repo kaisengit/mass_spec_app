@@ -33,7 +33,9 @@ async def read_root(request: Request) -> HTMLResponse:
 
 # Route for Compounds
 @router.get(
-    "/compounds/", response_model=List[schemas.Compound], tags=[config.STR_COMPOUNDS]
+    "/compounds/",
+    response_model=List[schemas.Compound],
+    tags=[config.STR_COMPOUNDS],
 )
 def read_compounds(
     skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
@@ -51,7 +53,9 @@ def create_compound(
     try:
         return crud.create_compound(db, compound=compound)
     except ValueError as e:
-        raise HTTPException(status_code=404, detail=f"Not able to create compound: {e}")
+        raise HTTPException(
+            status_code=404, detail=f"Not able to create compound: {e}"
+        )
 
 
 # Route for a Single Compound by ID
@@ -71,7 +75,9 @@ def get_compound_by_id(
 
 
 # Route for Adducts
-@router.get("/adducts/", response_model=List[schemas.Adduct], tags=[config.STR_ADDUCTS])
+@router.get(
+    "/adducts/", response_model=List[schemas.Adduct], tags=[config.STR_ADDUCTS]
+)
 def get_adducts(
     skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
 ) -> List[models.Adduct]:
@@ -80,7 +86,9 @@ def get_adducts(
 
 
 # Route for creating Adducts
-@router.post("/adducts/", response_model=schemas.Compound, tags=[config.STR_ADDUCTS])
+@router.post(
+    "/adducts/", response_model=schemas.Compound, tags=[config.STR_ADDUCTS]
+)
 def create_adducts(
     adduct: schemas.AdductCreate, db: Session = Depends(get_db)
 ) -> models.Adduct:
@@ -89,9 +97,13 @@ def create_adducts(
 
 # Route for a Single Adduct by ID
 @router.get(
-    "/adducts/{adduct_id}", response_model=schemas.Adduct, tags=[config.STR_ADDUCTS]
+    "/adducts/{adduct_id}",
+    response_model=schemas.Adduct,
+    tags=[config.STR_ADDUCTS],
 )
-def get_adduct_by_id(adduct_id: int, db: Session = Depends(get_db)) -> models.Adduct:
+def get_adduct_by_id(
+    adduct_id: int, db: Session = Depends(get_db)
+) -> models.Adduct:
     """Fetch a single adduct by ID."""
     adduct = crud.get_adduct_by_id(db, adduct_id=adduct_id)
     if adduct is None:
@@ -156,7 +168,9 @@ def create_measured_compound(
             db, measured_compound=measured_compound
         )
     except ValueError as e:
-        raise HTTPException(status_code=404, detail=f"Not able to create compound: {e}")
+        raise HTTPException(
+            status_code=404, detail=f"Not able to create compound: {e}"
+        )
 
 
 # Route for a Single Measured Compound by ID
@@ -173,7 +187,9 @@ def get_measured_compound_by_id(
         db, measured_compound_id=measured_compound_id
     )
     if measured_compound is None:
-        raise HTTPException(status_code=404, detail="Measured compound not found")
+        raise HTTPException(
+            status_code=404, detail="Measured compound not found"
+        )
     return measured_compound
 
 
@@ -217,7 +233,10 @@ def get_mono_isotopic_mass(molecular_formula: str) -> Dict:
     """Calculate monoisotopic mass from a molecular formula."""
     try:
         mass = cu.get_monoisotopic_mass(molecular_formula=molecular_formula)
-        return {"molecular_formula": molecular_formula, "monoisotopic_mass": mass}
+        return {
+            "molecular_formula": molecular_formula,
+            "monoisotopic_mass": mass,
+        }
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 

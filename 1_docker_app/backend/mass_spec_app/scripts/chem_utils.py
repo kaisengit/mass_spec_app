@@ -3,7 +3,7 @@
 Utility functions for handling chemical data parsing and calculations,
 such as molecular mass computation.
 Includes functions for parsing molecular formulas and converting isotope notation.
-"""
+"""  # noqa: E501
 import re
 
 from molmass import Formula
@@ -12,11 +12,11 @@ from molmass import Formula
 def convert_isotope_notation(molecular_formula: str) -> str:
     """
     Converts C18[2]H14 to C18[2H14] which can then be parsed by the molmass package
-    """
-    # This regex pattern captures elements with isotope notation, such as [13]C3 or [15]N3
+    """  # noqa: E501
+    # This regex pattern captures elements with isotope notation, such as [13]C3 or [15]N3  # noqa: E501
     pattern = re.compile(r"(\[([0-9]+)\])([A-Z][a-z]*)(\d*)")
 
-    # The replacer will adjust the position of the isotope and its related element
+    # The replacer will adjust the position of the isotope and its related element  # noqa: E501
     def replacer(match) -> str:
         element = match.group(3)  # Element symbol (e.g., 'C', 'H', 'N')
         count = match.group(4)  # Element count (optional, like '3' in 'C3')
@@ -37,7 +37,7 @@ def get_monoisotopic_mass(molecular_formula: str) -> float:
     Compute the mono-isotopic mass and molecular formula using molmass.
     The molecular formula should be in the format C10[2H]6H4O3Cl1 or C10[2H6]H4O3Cl1.
     The format C10[2]H6H4O3Cl1 is automatically converted
-    """
+    """  # noqa: E501
     try:
         # Convert the formula for isotopic elements
         formatted_formula = convert_isotope_notation(molecular_formula)
@@ -53,7 +53,8 @@ def get_monoisotopic_mass(molecular_formula: str) -> float:
         return monoisotopic_mass
     except Exception as e:
         raise ValueError(
-            f"Error computing molecular mass for {molecular_formula}/{formatted_formula}: {e}"
+            f"Error computing molecular mass for {molecular_formula}/"
+            f"{formatted_formula}: {e}"
         )
 
 
@@ -61,8 +62,8 @@ def get_measured_formula(molecular_formula: str, adduct_name: str) -> str:
     """
     Compute the measured molecular formula by adding the adduct.
     The molecular formula should be in the format C10[2H]6H4O3Cl1 or C10[2H6]H4O3Cl1.
-    """
-    # Define the regular expression pattern to match adducts like M+Na, M-H, M+H, etc.
+    """  # noqa: E501
+    # Define the regular expression pattern to match adducts like M+Na, M-H, M+H, etc.  # noqa: E501
     pattern_adduct = r"M([+-])([A-Z][a-z]?)"
     valid_adducts = ("Na", "H")
 
@@ -84,14 +85,15 @@ def get_measured_formula(molecular_formula: str, adduct_name: str) -> str:
                 mm_formula -= mm_adduct
             else:
                 raise ValueError(
-                    "Invalid operation. Use '+' to add or '-' to remove an atom."
+                    "Invalid operation. Use '+' to add or '-' to remove an atom."  # noqa: E501
                 )
 
             # Return the updated molecular formula
             return str(mm_formula.formula)
         except Exception as e:
             raise ValueError(
-                f"Error performing {adduct_operation} operation on {adduct_element}: {e}"
+                f"Error performing {adduct_operation} "
+                f"operation on {adduct_element}: {e}"
             )
     else:
         raise ValueError(f"Invalid adduct name: {adduct_name}")

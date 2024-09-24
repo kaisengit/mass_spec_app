@@ -1,8 +1,10 @@
 import pytest
 from mass_spec_app.api import schemas
 from mass_spec_app.config import DATABASE_URL_TEST
-from mass_spec_app.db.crud import (create_compound,
-                                   get_measured_compounds_filtered)
+from mass_spec_app.db.crud import (
+    create_compound,
+    get_measured_compounds_filtered,
+)
 from mass_spec_app.db.models import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -12,7 +14,9 @@ engine = create_engine(DATABASE_URL_TEST)
 if not database_exists(engine.url):
     print("create test db")
     create_database(engine.url)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine
+)
 
 
 @pytest.fixture(scope="function")

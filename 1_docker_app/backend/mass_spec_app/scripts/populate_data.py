@@ -2,7 +2,7 @@
 """
 Script responsible for populating the database with initial data from external input files.
 It processes raw data, maps it to the relevant models, and inserts it into the database.
-"""
+"""  # noqa: E501
 import json
 import logging
 from datetime import datetime, timezone
@@ -30,7 +30,9 @@ def set_initialization_status(db: Session) -> None:
     """Set the database as initialized with a timezone-aware timestamp."""
     status = models.InitializationStatus(
         is_initialized=True,
-        initialized_at=datetime.now(tz=timezone.utc),  # Use timezone-aware datetime
+        initialized_at=datetime.now(
+            tz=timezone.utc
+        ),  # Use timezone-aware datetime
     )
     db.add(status)
     db.commit()
@@ -54,17 +56,19 @@ def populate_adducts(db: Session) -> None:
 
 
 def populate_compounds(db: Session) -> None:
-    """Populate the Compounds table from compounds.xlsx using the CompoundCreate schema."""
+    """Populate the Compounds table from compounds.xlsx using the CompoundCreate schema."""  # noqa: E501
     logging.info("Populating Compounds")
     compounds_df = pd.read_excel(COMPOUNDS_FILE)
 
     for _, row in compounds_df.iterrows():
-        # Handle NaN values in the 'type' column by setting a default value (like None or "Unknown")
+        # Handle NaN values in the 'type' column by setting a default value (like None or "Unknown")  # noqa: E501
         compound_type = (
             row["type"] if pd.notna(row["type"]) else None
         )  # Set to None if NaN, or "Unknown" as an alternative
         # we sanitize molecular formulas on import
-        molecular_formula = cu.convert_isotope_notation(row["molecular_formula"])
+        molecular_formula = cu.convert_isotope_notation(
+            row["molecular_formula"]
+        )
         # Create a CompoundCreate schema object
         compound_create = schemas.CompoundCreate(
             compound_id=row["compound_id"],
@@ -77,7 +81,7 @@ def populate_compounds(db: Session) -> None:
 
 
 def populate_measured_compounds(db: Session) -> None:
-    """Populate the MeasuredCompounds table using the MeasuredCompoundCreate schema."""
+    """Populate the MeasuredCompounds table using the MeasuredCompoundCreate schema."""  # noqa: E501
     logging.info("Populating Measured Compounds")
     measured_compounds_df = pd.read_excel(MEASURED_COMPOUNDS_FILE)
 
@@ -85,16 +89,16 @@ def populate_measured_compounds(db: Session) -> None:
         # Get the adduct_name from the file (assuming the column is present)
         adduct_name = row.get("adduct_name")
         retention_time = row.get("retention_time")
-        # Handle NaN values in the 'type' column by setting a default value (like None or "Unknown")
+        # Handle NaN values in the 'type' column by setting a default value (like None or "Unknown")  # noqa: E501
         retention_time_comment = (
             row["retention_time_comment"]
             if pd.notna(row["retention_time_comment"])
             else None
-        )  # Set to None if NaN, or "Unknown" as an alternativeion_time from input
+        )  # Set to None if NaN, or "Unknown" as an alternativeion_time from input  # noqa: E501
 
         if not adduct_name:
             print(
-                f"Adduct name missing for compound {row['compound_name']}. Skipping entry."
+                f"Adduct name missing for compound {row['compound_name']}. Skipping entry."  # noqa: E501
             )
             continue
 
