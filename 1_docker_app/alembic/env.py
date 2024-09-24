@@ -2,8 +2,9 @@ from logging.config import fileConfig
 
 from alembic import context
 from mass_spec_app.config import DATABASE_URL  # Ensure to use the correct path
-from mass_spec_app.db.models import \
-    Base  # Ensure to use the correct path to your models file
+from mass_spec_app.db.models import (
+    Base,
+)  # Ensure to use the correct path to your models file
 from sqlalchemy import engine_from_config, pool
 
 # this is the Alembic Config object, which provides
@@ -67,7 +68,9 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection, target_metadata=target_metadata
+        )
 
         with context.begin_transaction():
             context.run_migrations()
